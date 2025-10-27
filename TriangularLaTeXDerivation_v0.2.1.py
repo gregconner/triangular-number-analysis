@@ -26,19 +26,15 @@ def is_perfect_square(x):
 
 def derive_expression_for_T_T_m_squared_squared(m):
     """
-    Derive expression for (T_(T_m)²)² using the consecutive sum property.
+    Derive expression for (T_(T_m)²)² using the triangular number identity.
     
-    Key insight: T_n + T_(n+1) = (n+1)²
+    Key insight: i² = T_{i-1} + T_i
     
     For (T_(T_m)²)²:
     1. T_m = m(m+1)/2
-    2. T_m² = (m(m+1)/2)² = m²(m+1)²/4
-    3. T_(T_m²) = T_m²(T_m² + 1)/2
-    4. (T_(T_m²))² = (T_m²(T_m² + 1)/2)²
-    
-    Now, if T_(T_m²) = k² for some k, then:
-    T_(T_m²) = T_(k-1) + T_k = k²
-    So (T_(T_m²))² = (k²)² = k⁴
+    2. T_m² = (T_m)² = T_{T_m-1} + T_{T_m} (applying the identity)
+    3. T_(T_m²) = T_{T_{T_m-1} + T_{T_m}}
+    4. (T_(T_m²))² = (T_{T_m²})² = T_{T_{T_m²}-1} + T_{T_{T_m²}} (applying the identity again)
     """
     T_m = triangular_number(m)
     T_m_squared = T_m * T_m
@@ -47,23 +43,32 @@ def derive_expression_for_T_T_m_squared_squared(m):
     print(f"Derivation for m = {m}:")
     print(f"T_{m} = {T_m}")
     print(f"T_{m}² = {T_m_squared}")
-    print(f"T_{T_m_squared} = {T_of_T_m_squared}")
-    print(f"(T_{T_m_squared})² = {T_of_T_m_squared ** 2}")
     
-    # Check if we can use consecutive sum property
-    if is_perfect_square(T_of_T_m_squared):
-        sqrt_val = int(math.sqrt(T_of_T_m_squared))
-        print(f"Since T_{T_m_squared} = {T_of_T_m_squared} = {sqrt_val}²,")
-        print(f"we have T_{T_m_squared} = T_{sqrt_val-1} + T_{sqrt_val}")
-        print(f"Therefore: (T_{T_m_squared})² = ({sqrt_val}²)² = {sqrt_val}⁴")
-        return sqrt_val, True
-    else:
-        print(f"T_{T_m_squared} = {T_of_T_m_squared} is not a perfect square")
-        print("Cannot directly apply consecutive sum property")
-        return None, False
+    # Find which consecutive triangular numbers sum to T_m²
+    # We need T_{k-1} + T_k = T_m²
+    # This means k² = T_m², so k = T_m
+    k = T_m
+    print(f"Applying identity: T_{m}² = T_{k-1} + T_{k}")
+    print(f"T_{k-1} = {triangular_number(k-1)}")
+    print(f"T_{k} = {triangular_number(k)}")
+    print(f"Check: T_{k-1} + T_{k} = {triangular_number(k-1)} + {triangular_number(k)} = {triangular_number(k-1) + triangular_number(k)}")
+    print(f"This equals T_{m}² = {T_m_squared} ✓")
+    
+    print(f"T_{T_m_squared} = {T_of_T_m_squared}")
+    
+    # Apply the identity to (T_{T_m²})²
+    j = T_of_T_m_squared
+    print(f"Applying identity: (T_{T_m_squared})² = T_{j-1} + T_{j}")
+    print(f"T_{j-1} = {triangular_number(j-1)}")
+    print(f"T_{j} = {triangular_number(j)}")
+    print(f"Check: T_{j-1} + T_{j} = {triangular_number(j-1)} + {triangular_number(j)} = {triangular_number(j-1) + triangular_number(j)}")
+    print(f"This equals (T_{T_m_squared})² = {T_of_T_m_squared ** 2} ✓")
+    print(f"Final result: (T_{T_m_squared})² = T_{j-1} + T_{j}")
+    
+    return j-1, j
 
 def generate_latex_document():
-    """Generate LaTeX document with mathematical derivation"""
+    """Generate LaTeX document with corrected mathematical derivation"""
     
     latex_content = r"""
 \documentclass{article}
@@ -72,7 +77,7 @@ def generate_latex_document():
 \usepackage{geometry}
 \geometry{margin=1in}
 
-\title{Derivation of $(T_{T_m^2})^2$ Using Consecutive Triangular Sum Property}
+\title{Derivation of $(T_{T_m^2})^2$ Using Triangular Number Identity}
 \author{Gregory Conner}
 \date{\today}
 
@@ -82,66 +87,62 @@ def generate_latex_document():
 
 \section{Introduction}
 
-This document derives mathematical expressions for $(T_{T_m^2})^2$ using the fundamental property of triangular numbers:
+This document derives mathematical expressions for $(T_{T_m^2})^2$ using the fundamental triangular number identity:
 
 \begin{equation}
-T_n + T_{n+1} = (n+1)^2
+i^2 = T_{i-1} + T_i
 \end{equation}
 
 where $T_n = \frac{n(n+1)}{2}$ is the $n$-th triangular number.
 
-\section{The Consecutive Triangular Sum Property}
+\section{The Triangular Number Identity}
 
-The consecutive triangular sum property states that the sum of two consecutive triangular numbers equals the square of the larger subscript:
+The key identity states that any perfect square can be expressed as the sum of two consecutive triangular numbers:
 
 \begin{align}
-T_n + T_{n+1} &= \frac{n(n+1)}{2} + \frac{(n+1)(n+2)}{2} \\
-&= \frac{(n+1)}{2}[n + (n+2)] \\
-&= \frac{(n+1)}{2}[2n+2] \\
-&= \frac{(n+1)}{2} \cdot 2(n+1) \\
-&= (n+1)^2
+i^2 &= T_{i-1} + T_i \\
+&= \frac{(i-1)i}{2} + \frac{i(i+1)}{2} \\
+&= \frac{i}{2}[(i-1) + (i+1)] \\
+&= \frac{i}{2}[2i] \\
+&= i^2
 \end{align}
 
 \section{Derivation of $(T_{T_m^2})^2$}
 
-We want to find an expression for $(T_{T_m^2})^2$ using the consecutive sum property.
+We want to find an expression for $(T_{T_m^2})^2$ using only terms of the form $T_l$.
 
 \subsection{Step 1: Express $T_m$ and $T_m^2$}
 
 For any natural number $m$:
 \begin{align}
 T_m &= \frac{m(m+1)}{2} \\
-T_m^2 &= \left(\frac{m(m+1)}{2}\right)^2 = \frac{m^2(m+1)^2}{4}
+T_m^2 &= \left(\frac{m(m+1)}{2}\right)^2
 \end{align}
 
-\subsection{Step 2: Calculate $T_{T_m^2}$}
+\subsection{Step 2: Apply the identity to $T_m^2$}
+
+Since $T_m^2$ is a perfect square, we can apply the identity $i^2 = T_{i-1} + T_i$:
+
+Let $i = T_m$, then:
+\begin{equation}
+T_m^2 = T_{T_m-1} + T_{T_m}
+\end{equation}
+
+\subsection{Step 3: Calculate $T_{T_m^2}$}
+
+Now we need to find $T_{T_m^2} = T_{T_{T_m-1} + T_{T_m}}$:
 
 \begin{align}
-T_{T_m^2} &= \frac{T_m^2(T_m^2 + 1)}{2} \\
-&= \frac{\frac{m^2(m+1)^2}{4}\left(\frac{m^2(m+1)^2}{4} + 1\right)}{2} \\
-&= \frac{m^2(m+1)^2}{8}\left(\frac{m^2(m+1)^2}{4} + 1\right) \\
-&= \frac{m^2(m+1)^2}{8} \cdot \frac{m^2(m+1)^2 + 4}{4} \\
-&= \frac{m^2(m+1)^2[m^2(m+1)^2 + 4]}{32}
+T_{T_m^2} &= T_{T_{T_m-1} + T_{T_m}} \\
+&= \frac{(T_{T_m-1} + T_{T_m})(T_{T_m-1} + T_{T_m} + 1)}{2}
 \end{align}
 
-\subsection{Step 3: Apply Consecutive Sum Property}
+\subsection{Step 4: Apply the identity to $(T_{T_m^2})^2$}
 
-If $T_{T_m^2}$ is a perfect square, say $T_{T_m^2} = k^2$ for some $k$, then we can apply the consecutive sum property:
+To find $(T_{T_m^2})^2$, we apply the identity again. Let $j = T_{T_m^2}$, then:
 
 \begin{equation}
-T_{T_m^2} = T_{k-1} + T_k = k^2
-\end{equation}
-
-Therefore:
-\begin{equation}
-(T_{T_m^2})^2 = (k^2)^2 = k^4
-\end{equation}
-
-\subsection{Step 4: General Expression}
-
-For the general case, we have:
-\begin{equation}
-(T_{T_m^2})^2 = \left(\frac{m^2(m+1)^2[m^2(m+1)^2 + 4]}{32}\right)^2
+(T_{T_m^2})^2 = j^2 = T_{j-1} + T_j = T_{T_{T_m^2}-1} + T_{T_{T_m^2}}
 \end{equation}
 
 \section{Specific Cases}
@@ -150,40 +151,54 @@ For the general case, we have:
 
 \begin{align}
 T_1 &= \frac{1 \cdot 2}{2} = 1 \\
-T_1^2 &= 1 \\
-T_{T_1^2} = T_1 &= 1 = 1^2
+T_1^2 &= 1^2 = T_0 + T_1 = 0 + 1 = 1 \\
+T_{T_1^2} = T_1 &= 1 \\
+(T_{T_1^2})^2 &= 1^2 = T_0 + T_1 = 0 + 1 = 1
 \end{align}
 
-Since $T_1 = 1^2$, we can apply the consecutive sum property:
-\begin{align}
-T_1 &= T_0 + T_1 = 0 + 1 = 1 \\
-(T_{T_1^2})^2 &= (T_1)^2 = (1^2)^2 = 1^4 = 1
-\end{align}
+Therefore: $(T_{T_1^2})^2 = T_0 + T_1$
 
 \subsection{Case 2: $m = 2$}
 
 \begin{align}
 T_2 &= \frac{2 \cdot 3}{2} = 3 \\
-T_2^2 &= 9 \\
-T_{T_2^2} = T_9 &= \frac{9 \cdot 10}{2} = 45
+T_2^2 &= 3^2 = T_2 + T_3 = 3 + 6 = 9 \\
+T_{T_2^2} = T_9 &= \frac{9 \cdot 10}{2} = 45 \\
+(T_{T_2^2})^2 &= 45^2 = T_{44} + T_{45}
 \end{align}
 
-Since $T_9 = 45$ is not a perfect square, we cannot directly apply the consecutive sum property. The general formula gives:
-\begin{equation}
-(T_{T_2^2})^2 = (T_9)^2 = 45^2 = 2025
-\end{equation}
+Therefore: $(T_{T_2^2})^2 = T_{44} + T_{45}$
+
+\subsection{Case 3: $m = 3$}
+
+\begin{align}
+T_3 &= \frac{3 \cdot 4}{2} = 6 \\
+T_3^2 &= 6^2 = T_5 + T_6 = 15 + 21 = 36 \\
+T_{T_3^2} = T_{36} &= \frac{36 \cdot 37}{2} = 666 \\
+(T_{T_3^2})^2 &= 666^2 = T_{665} + T_{666}
+\end{align}
+
+Therefore: $(T_{T_3^2})^2 = T_{665} + T_{666}$
+
+\section{General Pattern}
+
+For any natural number $m$:
+
+\begin{enumerate}
+\item $T_m^2 = T_{T_m-1} + T_{T_m}$
+\item $T_{T_m^2} = T_{T_{T_m-1} + T_{T_m}}$
+\item $(T_{T_m^2})^2 = T_{T_{T_m^2}-1} + T_{T_{T_m^2}}$
+\end{enumerate}
 
 \section{Conclusion}
 
-The consecutive triangular sum property $T_n + T_{n+1} = (n+1)^2$ provides a powerful tool for deriving expressions involving triangular numbers. For $(T_{T_m^2})^2$:
+Using the triangular number identity $i^2 = T_{i-1} + T_i$, we can express $(T_{T_m^2})^2$ entirely in terms of triangular numbers:
 
-\begin{itemize}
-\item When $T_{T_m^2}$ is a perfect square, we can express $(T_{T_m^2})^2$ as $k^4$ where $k^2 = T_{T_m^2}$
-\item In the general case, we have the explicit formula involving $m^2(m+1)^2$
-\item The case $m = 1$ is special, allowing direct application of the consecutive sum property
-\end{itemize}
+\begin{equation}
+(T_{T_m^2})^2 = T_{T_{T_m^2}-1} + T_{T_{T_m^2}}
+\end{equation}
 
-This derivation demonstrates the deep connections between triangular numbers and perfect squares, revealing the elegant mathematical structure underlying these sequences.
+This demonstrates the power of the triangular number identity in reducing complex expressions involving squares to sums of triangular numbers.
 
 \end{document}
 """
