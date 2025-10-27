@@ -1,11 +1,11 @@
 """
 Triangular Square Difference Finder
 Finds the smallest natural number that is both:
-1. The triangular number of the square of a triangular number (T_(T_n²))
+1. The square of the triangular number of the square of a triangular number ((T_(T_n²))²)
 2. The difference between two triangular numbers (T_m - T_k)
 
 Author: Gregory Conner
-Version: 0.1.2
+Version: 0.1.3
 """
 
 import math
@@ -20,6 +20,36 @@ def is_perfect_square(x):
         return False
     root = int(math.sqrt(x))
     return root * root == x
+
+def is_square_of_triangular_of_square_of_triangular(x):
+    """
+    Check if a number is the square of the triangular number of the square of a triangular number.
+    This means x = (T_(T_n²))² for some n.
+    Returns (is_square_of_triangular_of_square_of_triangular, n) where n is the triangular number index.
+    """
+    # We need to find n such that x = (T_(T_n²))²
+    # This means x = (T_n² * (T_n² + 1) / 2)²
+    
+    # First check if x is a perfect square
+    if not is_perfect_square(x):
+        return False, 0
+    
+    sqrt_x = int(math.sqrt(x))
+    
+    # Try different values of n to see if sqrt_x = T_(T_n²)
+    max_n = 10  # Even smaller bound since this grows very quickly
+    
+    for n in range(1, max_n + 1):
+        T_n = triangular_number(n)
+        T_n_squared = T_n * T_n
+        T_of_T_n_squared = triangular_number(T_n_squared)
+        
+        if T_of_T_n_squared == sqrt_x:
+            return True, n
+        elif T_of_T_n_squared > sqrt_x:
+            break  # No point continuing if we've exceeded sqrt_x
+    
+    return False, 0
 
 def is_triangular_of_square_of_triangular(x):
     """
@@ -114,29 +144,30 @@ def is_difference_of_triangulars(x):
 def find_smallest_solution():
     """Find the smallest natural number satisfying both conditions"""
     print("Searching for the smallest natural number that is:")
-    print("1. The triangular number of the square of a triangular number (T_(T_n²))")
+    print("1. The square of the triangular number of the square of a triangular number ((T_(T_n²))²)")
     print("2. The difference between two triangular numbers (T_m - T_k)")
     print()
     
     # Start searching from small numbers
-    for x in range(1, 100001):  # Increased search range
-        # Check if x is triangular of square of triangular
-        is_tri_of_square_tri, n1 = is_triangular_of_square_of_triangular(x)
+    for x in range(1, 1000001):  # Increased search range significantly
+        # Check if x is square of triangular of square of triangular
+        is_square_tri_of_square_tri, n1 = is_square_of_triangular_of_square_of_triangular(x)
         
-        if is_tri_of_square_tri:
+        if is_square_tri_of_square_tri:
             # Check if x is difference of triangulars
             is_diff_tri, n2, m = is_difference_of_triangulars(x)
             
             if is_diff_tri:
                 T_n1 = triangular_number(n1)
                 T_n1_squared = T_n1 * T_n1
+                T_of_T_n1_squared = triangular_number(T_n1_squared)
                 print(f"Found solution: {x}")
-                print(f"  - {x} = T_{T_n1_squared} (where T_{n1} = {T_n1}, so T_{T_n1_squared} = {x})")
+                print(f"  - {x} = {T_of_T_n1_squared}² (where T_{n1} = {T_n1}, T_{T_n1_squared} = {T_of_T_n1_squared})")
                 print(f"  - {x} = T_{m} - T_{n2} = {triangular_number(m)} - {triangular_number(n2)}")
                 return x, n1, n2, m
         
         # Progress indicator
-        if x % 10000 == 0:
+        if x % 100000 == 0:
             print(f"Checked up to {x}...")
     
     print("No solution found in the search range.")
