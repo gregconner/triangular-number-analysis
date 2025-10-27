@@ -4,10 +4,12 @@ Finds numbers that are both:
 1. Sum of two consecutive triangular numbers (T_n + T_(n+1))
 2. Difference of two triangular numbers (T_m - T_k)
 
+Special focus: Finding the smallest ODD number with both properties
+
 Uses the property: T_n + T_(n+1) = (n+1)²
 
 Author: Gregory Conner
-Version: 0.1.5
+Version: 0.1.6
 """
 
 # Triangular number formula: T_n = n(n+1)/2

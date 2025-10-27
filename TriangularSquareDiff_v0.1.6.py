@@ -4,10 +4,12 @@ Finds numbers that are both:
 1. Sum of two consecutive triangular numbers (T_n + T_(n+1))
 2. Difference of two triangular numbers (T_m - T_k)
 
+Special focus: Finding the smallest ODD number with both properties
+
 Uses the property: T_n + T_(n+1) = (n+1)²
 
 Author: Gregory Conner
-Version: 0.1.5
+Version: 0.1.6
 """
 
 import math
@@ -188,6 +190,42 @@ def is_difference_of_triangulars(x):
     
     return False, 0, 0
 
+def find_smallest_odd_consecutive_sum_and_difference():
+    """Find the smallest ODD number that is both sum of consecutive triangulars and difference of triangulars"""
+    print("Triangular Number Analysis: Smallest ODD Consecutive Sum AND Difference")
+    print("=" * 70)
+    print()
+    
+    # Demonstrate the consecutive triangular sum property
+    demonstrate_consecutive_property(10)
+    
+    print("Searching for the smallest ODD natural number that is:")
+    print("1. Sum of two consecutive triangular numbers (T_n + T_(n+1))")
+    print("2. Difference of two triangular numbers (T_m - T_k)")
+    print()
+    
+    # Since T_n + T_(n+1) = (n+1)², we only need to check perfect squares
+    # For odd numbers, we need odd perfect squares: 3², 5², 7², 9², ...
+    # Start searching from odd perfect squares
+    for n in range(3, 100, 2):  # Start from n=3 (odd), step by 2 to get only odd numbers
+        x = n * n  # This is T_(n-1) + T_n
+        
+        # Check if x is also difference of triangulars
+        is_diff_tri, k, m = is_difference_of_triangulars(x)
+        
+        if is_diff_tri:
+            print(f"Found solution: {x}")
+            print(f"  - {x} = T_{n-1} + T_{n} = {triangular_number(n-1)} + {triangular_number(n)} = {n}²")
+            print(f"  - {x} = T_{m} - T_{k} = {triangular_number(m)} - {triangular_number(k)}")
+            return x, n-1, n, k, m
+        
+        # Progress indicator
+        if n % 10 == 1:  # Show progress every 10 odd numbers
+            print(f"Checked odd perfect squares up to {n}² = {x}...")
+    
+    print("No solution found in the search range.")
+    return None
+
 def find_smallest_consecutive_sum_and_difference():
     """Find the smallest number that is both sum of consecutive triangulars and difference of triangulars"""
     print("Triangular Number Analysis: Consecutive Sum AND Difference")
@@ -271,4 +309,4 @@ def find_smallest_solution():
     return None
 
 if __name__ == "__main__":
-    result = find_smallest_consecutive_sum_and_difference()
+    result = find_smallest_odd_consecutive_sum_and_difference()
