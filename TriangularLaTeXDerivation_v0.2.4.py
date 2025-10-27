@@ -31,9 +31,9 @@ def derive_expression_for_T_T_m_squared_squared(m):
     Key insight: Apply the rule whenever we encounter a squaring operation.
     
     Starting with (T_(T_m²))²:
-    1. Apply rule to inner square T_m²: T_m² = T_{T_m-1} + T_{T_m}
-    2. This gives us (T_(T_{T_m-1} + T_{T_m}))²
-    3. Apply rule to outer square: (T_(T_{T_m-1} + T_{T_m}))² = T_{T_{T_m-1}+T_{T_m}-1} + T_{T_{T_m-1}+T_{T_m}}
+    1. Apply rule to inner square T_m²: T_m² = T_{m-1} + T_m
+    2. This gives us (T_(T_{m-1} + T_m))²
+    3. Apply rule to outer square: (T_(T_{m-1} + T_m))² = T_{T_{m-1}+T_m-1} + T_{T_{m-1}+T_m}
     
     Final expression uses only T_l terms with no squares.
     """
@@ -45,19 +45,19 @@ def derive_expression_for_T_T_m_squared_squared(m):
     
     # Step 1: Apply rule to T_m²
     print(f"Step 1: Apply i² = T_{{i-1}} + T_{{i}} to T_{m}²")
-    print(f"Let i = T_{m} = {T_m}")
-    T_Tm_minus_1 = triangular_number(T_m - 1)
-    T_Tm = triangular_number(T_m)
-    print(f"T_{m}² = T_{{T_{m}-1}} + T_{{T_{m}}} = T_{T_m-1} + T_{T_m}")
-    print(f"T_{T_m-1} = {T_Tm_minus_1}")
-    print(f"T_{T_m} = {T_Tm}")
-    print(f"T_{m}² = {T_Tm_minus_1} + {T_Tm} = {T_Tm_minus_1 + T_Tm} ✓")
+    print(f"Let i = m = {m}")
+    T_m_minus_1 = triangular_number(m - 1)
+    T_m_val = triangular_number(m)
+    print(f"T_{m}² = T_{{m-1}} + T_{{m}} = T_{m-1} + T_{m}")
+    print(f"T_{m-1} = {T_m_minus_1}")
+    print(f"T_{m} = {T_m_val}")
+    print(f"T_{m}² = {T_m_minus_1} + {T_m_val} = {T_m_minus_1 + T_m_val} ✓")
     print()
     
-    # Step 2: Now we have T_(T_{T_m-1} + T_{T_m})
-    subscript_value = T_Tm_minus_1 + T_Tm
-    print(f"Step 2: Calculate T_(T_{m}²) = T_(T_{{T_{m}-1}} + T_{{T_{m}}})")
-    print(f"T_{{T_{m}-1}} + T_{{T_{m}}} = {T_Tm_minus_1} + {T_Tm} = {subscript_value}")
+    # Step 2: Now we have T_(T_{m-1} + T_m)
+    subscript_value = T_m_minus_1 + T_m_val
+    print(f"Step 2: Calculate T_(T_{m}²) = T_(T_{{m-1}} + T_{{m}})")
+    print(f"T_{{m-1}} + T_{{m}} = {T_m_minus_1} + {T_m_val} = {subscript_value}")
     T_of_subscript = triangular_number(subscript_value)
     print(f"T_{subscript_value} = {T_of_subscript}")
     print()
@@ -65,9 +65,9 @@ def derive_expression_for_T_T_m_squared_squared(m):
     # Step 3: Apply rule to the outer square (T_(T_m²))²
     print(f"Step 3: Apply i² = T_{{i-1}} + T_{{i}} to (T_(T_{m}²))²")
     print(f"Let j = T_(T_{m}²) = T_{subscript_value} = {T_of_subscript}")
-    print(f"(T_(T_{m}²))² = T_{{T_(T_{m}²)-1}} + T_{{T_(T_{m}²)}}")
+    print(f"(T_(T_{m}²))² = T_{{j-1}} + T_{{j}}")
     print(f"            = T_{{{T_of_subscript}-1}} + T_{{{T_of_subscript}}}")
-    print(f"            = T_{{T_{{T_{m}-1}}+T_{{T_{m}}}-1}} + T_{{T_{{T_{m}-1}}+T_{{T_{m}}}}}")
+    print(f"            = T_{{T_{{m-1}}+T_{{m}}-1}} + T_{{T_{{m-1}}+T_{{m}}}}")
     print()
     
     T_j_minus_1 = triangular_number(T_of_subscript - 1)
@@ -78,7 +78,7 @@ def derive_expression_for_T_T_m_squared_squared(m):
     print()
     
     print(f"FINAL EXPRESSION:")
-    print(f"(T_(T_{m}²))² = T_{{T_{{T_{m}-1}}+T_{{T_{m}}}-1}} + T_{{T_{{T_{m}-1}}+T_{{T_{m}}}}}")
+    print(f"(T_(T_{m}²))² = T_{{T_{{m-1}}+T_{{m}}-1}} + T_{{T_{{m-1}}+T_{{m}}}}")
     print(f"             = T_{T_of_subscript-1} + T_{T_of_subscript}")
     print()
     
@@ -134,10 +134,10 @@ We want to find an expression for $(T_{T_m^2})^2$ using only terms of the form $
 
 For any natural number $m$, we have $T_m = \frac{m(m+1)}{2}$.
 
-The expression $(T_{T_m^2})^2$ contains the inner square $T_m^2$. Applying the identity where $i = T_m$:
+The expression $(T_{T_m^2})^2$ contains the inner square $T_m^2 = m^2$. Applying the identity where $i = m$:
 
 \begin{equation}
-T_m^2 = T_{T_m-1} + T_{T_m}
+T_m^2 = m^2 = T_{m-1} + T_m
 \end{equation}
 
 \subsection{Step 2: Substitute into the Original Expression}
@@ -145,17 +145,17 @@ T_m^2 = T_{T_m-1} + T_{T_m}
 Substituting this into $(T_{T_m^2})^2$:
 
 \begin{equation}
-(T_{T_m^2})^2 = \left(T_{T_{T_m-1} + T_{T_m}}\right)^2
+(T_{T_m^2})^2 = \left(T_{T_{m-1} + T_m}\right)^2
 \end{equation}
 
 \subsection{Step 3: Apply Identity to the Outer Square}
 
-Now we apply the identity to the outer squaring operation. Let $j = T_{T_{T_m-1} + T_{T_m}}$, then:
+Now we apply the identity to the outer squaring operation. Let $j = T_{T_{m-1} + T_m}$, then:
 
 \begin{align}
-\left(T_{T_{T_m-1} + T_{T_m}}\right)^2 &= j^2 \\
+\left(T_{T_{m-1} + T_m}\right)^2 &= j^2 \\
 &= T_{j-1} + T_j \\
-&= T_{T_{T_{T_m-1} + T_{T_m}}-1} + T_{T_{T_{T_m-1} + T_{T_m}}}
+&= T_{T_{T_{m-1} + T_m}-1} + T_{T_{T_{m-1} + T_m}}
 \end{align}
 
 \subsection{Final Expression}
@@ -163,7 +163,7 @@ Now we apply the identity to the outer squaring operation. Let $j = T_{T_{T_m-1}
 Therefore, the complete expression for $(T_{T_m^2})^2$ with no squares remaining is:
 
 \begin{equation}
-\boxed{(T_{T_m^2})^2 = T_{T_{T_m-1} + T_{T_m}-1} + T_{T_{T_m-1} + T_{T_m}}}
+\boxed{(T_{T_m^2})^2 = T_{T_{m-1} + T_m - 1} + T_{T_{m-1} + T_m}}
 \end{equation}
 
 \section{Specific Cases}

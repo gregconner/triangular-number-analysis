@@ -45,10 +45,10 @@ We want to find an expression for $(T_{T_m^2})^2$ using only terms of the form $
 
 For any natural number $m$, we have $T_m = \frac{m(m+1)}{2}$.
 
-The expression $(T_{T_m^2})^2$ contains the inner square $T_m^2$. Applying the identity where $i = T_m$:
+The expression $(T_{T_m^2})^2$ contains the inner square $T_m^2 = m^2$. Applying the identity where $i = m$:
 
 \begin{equation}
-T_m^2 = T_{T_m-1} + T_{T_m}
+T_m^2 = m^2 = T_{m-1} + T_m
 \end{equation}
 
 \subsection{Step 2: Substitute into the Original Expression}
@@ -56,17 +56,17 @@ T_m^2 = T_{T_m-1} + T_{T_m}
 Substituting this into $(T_{T_m^2})^2$:
 
 \begin{equation}
-(T_{T_m^2})^2 = \left(T_{T_{T_m-1} + T_{T_m}}\right)^2
+(T_{T_m^2})^2 = \left(T_{T_{m-1} + T_m}\right)^2
 \end{equation}
 
 \subsection{Step 3: Apply Identity to the Outer Square}
 
-Now we apply the identity to the outer squaring operation. Let $j = T_{T_{T_m-1} + T_{T_m}}$, then:
+Now we apply the identity to the outer squaring operation. Let $j = T_{T_{m-1} + T_m}$, then:
 
 \begin{align}
-\left(T_{T_{T_m-1} + T_{T_m}}\right)^2 &= j^2 \\
+\left(T_{T_{m-1} + T_m}\right)^2 &= j^2 \\
 &= T_{j-1} + T_j \\
-&= T_{T_{T_{T_m-1} + T_{T_m}}-1} + T_{T_{T_{T_m-1} + T_{T_m}}}
+&= T_{T_{T_{m-1} + T_m}-1} + T_{T_{T_{m-1} + T_m}}
 \end{align}
 
 \subsection{Final Expression}
@@ -74,7 +74,7 @@ Now we apply the identity to the outer squaring operation. Let $j = T_{T_{T_m-1}
 Therefore, the complete expression for $(T_{T_m^2})^2$ with no squares remaining is:
 
 \begin{equation}
-\boxed{(T_{T_m^2})^2 = T_{T_{T_m-1} + T_{T_m}-1} + T_{T_{T_m-1} + T_{T_m}}}
+\boxed{(T_{T_m^2})^2 = T_{T_{m-1} + T_m - 1} + T_{T_{m-1} + T_m}}
 \end{equation}
 
 \section{Specific Cases}
