@@ -1,11 +1,11 @@
 """
-Triangular Number Analysis Program
+Triangular Square Difference Finder
 Finds the smallest natural number that is both:
 1. The square of a triangular number
 2. The difference between two triangular numbers
 
 Author: Gregory Conner
-Version: 0.1.0
+Version: 0.1.1
 """
 
 # Triangular number formula: T_n = n(n+1)/2
