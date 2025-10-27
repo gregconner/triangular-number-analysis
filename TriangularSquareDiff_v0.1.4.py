@@ -4,11 +4,58 @@ Finds the smallest natural number that is both:
 1. The square of the triangular number of the square of a triangular number ((T_(T_n²))²)
 2. The difference between two triangular numbers (T_m - T_k)
 
+Uses the property: T_n + T_(n+1) = (n+1)²
+
 Author: Gregory Conner
-Version: 0.1.3
+Version: 0.1.4
 """
 
 import math
+
+def consecutive_triangular_sum_property(n):
+    """
+    Demonstrate the property: T_n + T_(n+1) = (n+1)²
+    Returns (T_n, T_(n+1), sum, (n+1)², is_valid)
+    """
+    T_n = triangular_number(n)
+    T_n_plus_1 = triangular_number(n + 1)
+    sum_consecutive = T_n + T_n_plus_1
+    square_of_next = (n + 1) ** 2
+    is_valid = sum_consecutive == square_of_next
+    
+    return T_n, T_n_plus_1, sum_consecutive, square_of_next, is_valid
+
+def is_sum_of_consecutive_triangulars(x):
+    """
+    Check if a number is the sum of two consecutive triangular numbers.
+    Uses the property: T_n + T_(n+1) = (n+1)²
+    So if x = k², then x = T_(k-1) + T_k
+    Returns (is_sum, n) where x = T_n + T_(n+1)
+    """
+    if not is_perfect_square(x):
+        return False, 0
+    
+    sqrt_x = int(math.sqrt(x))
+    n = sqrt_x - 1  # Since T_n + T_(n+1) = (n+1)², if x = k², then n = k-1
+    
+    if n > 0:
+        T_n = triangular_number(n)
+        T_n_plus_1 = triangular_number(n + 1)
+        if T_n + T_n_plus_1 == x:
+            return True, n
+    
+    return False, 0
+
+def demonstrate_consecutive_property(max_n=10):
+    """Demonstrate the consecutive triangular sum property for values 1 to max_n"""
+    print("Demonstrating the property: T_n + T_(n+1) = (n+1)²")
+    print("=" * 50)
+    
+    for n in range(1, max_n + 1):
+        T_n, T_n_plus_1, sum_val, square_val, is_valid = consecutive_triangular_sum_property(n)
+        print(f"n={n:2d}: T_{n} + T_{n+1} = {T_n:2d} + {T_n_plus_1:2d} = {sum_val:2d} = {n+1}² = {square_val:2d} ✓" if is_valid else f"n={n:2d}: ERROR!")
+    
+    print()
 
 def triangular_number(n):
     """Calculate the nth triangular number: T_n = n(n+1)/2"""
@@ -143,6 +190,13 @@ def is_difference_of_triangulars(x):
 
 def find_smallest_solution():
     """Find the smallest natural number satisfying both conditions"""
+    print("Triangular Number Analysis with Consecutive Sum Property")
+    print("=" * 60)
+    print()
+    
+    # Demonstrate the consecutive triangular sum property
+    demonstrate_consecutive_property(10)
+    
     print("Searching for the smallest natural number that is:")
     print("1. The square of the triangular number of the square of a triangular number ((T_(T_n²))²)")
     print("2. The difference between two triangular numbers (T_m - T_k)")
@@ -161,9 +215,17 @@ def find_smallest_solution():
                 T_n1 = triangular_number(n1)
                 T_n1_squared = T_n1 * T_n1
                 T_of_T_n1_squared = triangular_number(T_n1_squared)
+                
+                # Check if x is also sum of consecutive triangulars
+                is_consec_sum, n_consec = is_sum_of_consecutive_triangulars(x)
+                
                 print(f"Found solution: {x}")
                 print(f"  - {x} = {T_of_T_n1_squared}² (where T_{n1} = {T_n1}, T_{T_n1_squared} = {T_of_T_n1_squared})")
                 print(f"  - {x} = T_{m} - T_{n2} = {triangular_number(m)} - {triangular_number(n2)}")
+                
+                if is_consec_sum:
+                    print(f"  - {x} = T_{n_consec} + T_{n_consec+1} = {triangular_number(n_consec)} + {triangular_number(n_consec+1)} (using consecutive property)")
+                
                 return x, n1, n2, m
         
         # Progress indicator
