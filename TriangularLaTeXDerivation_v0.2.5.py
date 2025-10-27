@@ -33,7 +33,7 @@ def derive_expression_for_T_T_m_squared_squared(m):
     Starting with (T_(T_m²))²:
     1. Apply rule to inner square T_m²: T_m² = T_{m-1} + T_m
     2. This gives us (T_(T_{m-1} + T_m))²
-    3. Apply rule to outer square: (T_(T_{m-1} + T_m))² = T_{T_{m-1}+T_m-1} + T_{T_{m-1}+T_m}
+    3. Apply rule to outer square: (T_(T_{m-1} + T_m))² = T_{T_{m-1}+(T_m)-1} + T_{T_{m-1}+T_m}
     
     Final expression uses only T_l terms with no squares.
     """
@@ -67,7 +67,7 @@ def derive_expression_for_T_T_m_squared_squared(m):
     print(f"Let j = T_(T_{m}²) = T_{subscript_value} = {T_of_subscript}")
     print(f"(T_(T_{m}²))² = T_{{j-1}} + T_{{j}}")
     print(f"            = T_{{{T_of_subscript}-1}} + T_{{{T_of_subscript}}}")
-    print(f"            = T_{{T_{{m-1}}+T_{{m}}-1}} + T_{{T_{{m-1}}+T_{{m}}}}")
+    print(f"            = T_{{T_{{m-1}}+(T_{{m}})-1}} + T_{{T_{{m-1}}+T_{{m}}}}")
     print()
     
     T_j_minus_1 = triangular_number(T_of_subscript - 1)
@@ -78,7 +78,7 @@ def derive_expression_for_T_T_m_squared_squared(m):
     print()
     
     print(f"FINAL EXPRESSION:")
-    print(f"(T_(T_{m}²))² = T_{{T_{{m-1}}+T_{{m}}-1}} + T_{{T_{{m-1}}+T_{{m}}}}")
+    print(f"(T_(T_{m}²))² = T_{{T_{{m-1}}+(T_{{m}})-1}} + T_{{T_{{m-1}}+T_{{m}}}}")
     print(f"             = T_{T_of_subscript-1} + T_{T_of_subscript}")
     print()
     
@@ -155,7 +155,7 @@ Now we apply the identity to the outer squaring operation. Let $j = T_{T_{m-1} +
 \begin{align}
 \left(T_{T_{m-1} + T_m}\right)^2 &= j^2 \\
 &= T_{j-1} + T_j \\
-&= T_{T_{T_{m-1} + T_m}-1} + T_{T_{T_{m-1} + T_m}}
+&= T_{T_{T_{m-1} + (T_m)} - 1} + T_{T_{T_{m-1} + T_m}}
 \end{align}
 
 \subsection{Final Expression}
@@ -163,7 +163,7 @@ Now we apply the identity to the outer squaring operation. Let $j = T_{T_{m-1} +
 Therefore, the complete expression for $(T_{T_m^2})^2$ with no squares remaining is:
 
 \begin{equation}
-\boxed{(T_{T_m^2})^2 = T_{T_{m-1} + T_m - 1} + T_{T_{m-1} + T_m}}
+\boxed{(T_{T_m^2})^2 = T_{T_{m-1} + (T_m) - 1} + T_{T_{m-1} + T_m}}
 \end{equation}
 
 \section{Specific Cases}
