@@ -26,68 +26,63 @@ def is_perfect_square(x):
 
 def derive_expression_for_T_T_m_squared_squared(m):
     """
-    Derive expression for (T_(T_m)²)² using the triangular number identity recursively.
+    Derive expression for (T_(T_m²))² by applying i² = T_{i-1} + T_i to every square.
     
-    Key insight: i² = T_{i-1} + T_i
+    Key insight: Apply the rule whenever we encounter a squaring operation.
     
-    We apply this rule recursively until no squares remain on the right side.
+    Starting with (T_(T_m²))²:
+    1. Apply rule to inner square T_m²: T_m² = T_{T_m-1} + T_{T_m}
+    2. This gives us (T_(T_{T_m-1} + T_{T_m}))²
+    3. Apply rule to outer square: (T_(T_{T_m-1} + T_{T_m}))² = T_{T_{T_m-1}+T_{T_m}-1} + T_{T_{T_m-1}+T_{T_m}}
+    
+    Final expression uses only T_l terms with no squares.
     """
     T_m = triangular_number(m)
-    T_m_squared = T_m * T_m
-    T_of_T_m_squared = triangular_number(T_m_squared)
     
     print(f"Complete derivation for m = {m}:")
     print(f"T_{m} = {T_m}")
-    print(f"T_{m}² = {T_m_squared}")
+    print()
     
-    # Step 1: Apply identity to T_m²
-    k = T_m
-    print(f"\nStep 1: Apply identity to T_{m}²")
-    print(f"T_{m}² = T_{k-1} + T_{k}")
-    print(f"T_{k-1} = {triangular_number(k-1)}")
-    print(f"T_{k} = {triangular_number(k)}")
-    print(f"Check: T_{k-1} + T_{k} = {triangular_number(k-1)} + {triangular_number(k)} = {triangular_number(k-1) + triangular_number(k)} ✓")
+    # Step 1: Apply rule to T_m²
+    print(f"Step 1: Apply i² = T_{{i-1}} + T_{{i}} to T_{m}²")
+    print(f"Let i = T_{m} = {T_m}")
+    T_Tm_minus_1 = triangular_number(T_m - 1)
+    T_Tm = triangular_number(T_m)
+    print(f"T_{m}² = T_{{T_{m}-1}} + T_{{T_{m}}} = T_{T_m-1} + T_{T_m}")
+    print(f"T_{T_m-1} = {T_Tm_minus_1}")
+    print(f"T_{T_m} = {T_Tm}")
+    print(f"T_{m}² = {T_Tm_minus_1} + {T_Tm} = {T_Tm_minus_1 + T_Tm} ✓")
+    print()
     
-    # Step 2: Calculate T_{T_m²} = T_{T_{k-1} + T_{k}}
-    print(f"\nStep 2: Calculate T_{T_m_squared}")
-    print(f"T_{T_m_squared} = T_{{T_{k-1} + T_{k}}} = T_{triangular_number(k-1) + triangular_number(k)} = T_{T_m_squared} = {T_of_T_m_squared}")
+    # Step 2: Now we have T_(T_{T_m-1} + T_{T_m})
+    subscript_value = T_Tm_minus_1 + T_Tm
+    print(f"Step 2: Calculate T_(T_{m}²) = T_(T_{{T_{m}-1}} + T_{{T_{m}}})")
+    print(f"T_{{T_{m}-1}} + T_{{T_{m}}} = {T_Tm_minus_1} + {T_Tm} = {subscript_value}")
+    T_of_subscript = triangular_number(subscript_value)
+    print(f"T_{subscript_value} = {T_of_subscript}")
+    print()
     
-    # Step 3: Apply identity to (T_{T_m²})²
-    j = T_of_T_m_squared
-    print(f"\nStep 3: Apply identity to (T_{T_m_squared})²")
-    print(f"(T_{T_m_squared})² = T_{j-1} + T_{j}")
-    print(f"T_{j-1} = {triangular_number(j-1)}")
-    print(f"T_{j} = {triangular_number(j)}")
-    print(f"Check: T_{j-1} + T_{j} = {triangular_number(j-1)} + {triangular_number(j)} = {triangular_number(j-1) + triangular_number(j)} ✓")
+    # Step 3: Apply rule to the outer square (T_(T_m²))²
+    print(f"Step 3: Apply i² = T_{{i-1}} + T_{{i}} to (T_(T_{m}²))²")
+    print(f"Let j = T_(T_{m}²) = T_{subscript_value} = {T_of_subscript}")
+    print(f"(T_(T_{m}²))² = T_{{T_(T_{m}²)-1}} + T_{{T_(T_{m}²)}}")
+    print(f"            = T_{{{T_of_subscript}-1}} + T_{{{T_of_subscript}}}")
+    print(f"            = T_{{T_{{T_{m}-1}}+T_{{T_{m}}}-1}} + T_{{T_{{T_{m}-1}}+T_{{T_{m}}}}}")
+    print()
     
-    # Step 4: Now we need to eliminate the squares in the subscripts
-    # T_{j-1} and T_{j} might have squares in their subscripts
-    print(f"\nStep 4: Eliminate squares in subscripts")
+    T_j_minus_1 = triangular_number(T_of_subscript - 1)
+    T_j = triangular_number(T_of_subscript)
+    print(f"T_{T_of_subscript-1} = {T_j_minus_1}")
+    print(f"T_{T_of_subscript} = {T_j}")
+    print(f"(T_(T_{m}²))² = {T_j_minus_1} + {T_j} = {T_j_minus_1 + T_j} ✓")
+    print()
     
-    # Check if j-1 or j are perfect squares
-    if is_perfect_square(j-1):
-        sqrt_j_minus_1 = int(math.sqrt(j-1))
-        print(f"Since {j-1} = {sqrt_j_minus_1}², we have:")
-        print(f"T_{j-1} = T_{sqrt_j_minus_1-1} + T_{sqrt_j_minus_1}")
-        print(f"T_{sqrt_j_minus_1-1} = {triangular_number(sqrt_j_minus_1-1)}")
-        print(f"T_{sqrt_j_minus_1} = {triangular_number(sqrt_j_minus_1)}")
-        print(f"Check: T_{sqrt_j_minus_1-1} + T_{sqrt_j_minus_1} = {triangular_number(sqrt_j_minus_1-1) + triangular_number(sqrt_j_minus_1)} ✓")
-    else:
-        print(f"T_{j-1} = {triangular_number(j-1)} (no squares to eliminate)")
+    print(f"FINAL EXPRESSION:")
+    print(f"(T_(T_{m}²))² = T_{{T_{{T_{m}-1}}+T_{{T_{m}}}-1}} + T_{{T_{{T_{m}-1}}+T_{{T_{m}}}}}")
+    print(f"             = T_{T_of_subscript-1} + T_{T_of_subscript}")
+    print()
     
-    if is_perfect_square(j):
-        sqrt_j = int(math.sqrt(j))
-        print(f"Since {j} = {sqrt_j}², we have:")
-        print(f"T_{j} = T_{sqrt_j-1} + T_{sqrt_j}")
-        print(f"T_{sqrt_j-1} = {triangular_number(sqrt_j-1)}")
-        print(f"T_{sqrt_j} = {triangular_number(sqrt_j)}")
-        print(f"Check: T_{sqrt_j-1} + T_{sqrt_j} = {triangular_number(sqrt_j-1) + triangular_number(sqrt_j)} ✓")
-    else:
-        print(f"T_{j} = {triangular_number(j)} (no squares to eliminate)")
-    
-    print(f"\nFinal result: (T_{T_m_squared})² = T_{j-1} + T_{j}")
-    
-    return j-1, j
+    return T_of_subscript-1, T_of_subscript
 
 def generate_latex_document():
     """Generate LaTeX document with complete recursive derivation"""
@@ -131,51 +126,45 @@ i^2 &= T_{i-1} + T_i \\
 &= i^2
 \end{align}
 
-\section{Complete Recursive Derivation}
+\section{Complete Derivation}
 
-We want to find an expression for $(T_{T_m^2})^2$ using only terms of the form $T_l$, with no squares remaining.
+We want to find an expression for $(T_{T_m^2})^2$ using only terms of the form $T_l$, applying the identity $i^2 = T_{i-1} + T_i$ to every squaring operation.
 
 \subsection{Step 1: Apply Identity to $T_m^2$}
 
-For any natural number $m$:
-\begin{align}
-T_m &= \frac{m(m+1)}{2} \\
-T_m^2 &= \left(\frac{m(m+1)}{2}\right)^2
-\end{align}
+For any natural number $m$, we have $T_m = \frac{m(m+1)}{2}$.
 
-Since $T_m^2$ is a perfect square, we apply the identity $i^2 = T_{i-1} + T_i$ where $i = T_m$:
+The expression $(T_{T_m^2})^2$ contains the inner square $T_m^2$. Applying the identity where $i = T_m$:
 
 \begin{equation}
 T_m^2 = T_{T_m-1} + T_{T_m}
 \end{equation}
 
-\subsection{Step 2: Calculate $T_{T_m^2}$}
+\subsection{Step 2: Substitute into the Original Expression}
 
-Now we calculate:
-\begin{equation}
-T_{T_m^2} = T_{T_{T_m-1} + T_{T_m}}
-\end{equation}
-
-This gives us the triangular number whose subscript is the sum of two consecutive triangular numbers.
-
-\subsection{Step 3: Apply Identity to $(T_{T_m^2})^2$}
-
-To find $(T_{T_m^2})^2$, we apply the identity again. Let $j = T_{T_m^2}$, then:
+Substituting this into $(T_{T_m^2})^2$:
 
 \begin{equation}
-(T_{T_m^2})^2 = j^2 = T_{j-1} + T_j
+(T_{T_m^2})^2 = \left(T_{T_{T_m-1} + T_{T_m}}\right)^2
 \end{equation}
 
-\subsection{Step 4: Eliminate Remaining Squares}
+\subsection{Step 3: Apply Identity to the Outer Square}
 
-Now we must check if $j-1$ or $j$ are perfect squares and apply the identity recursively:
+Now we apply the identity to the outer squaring operation. Let $j = T_{T_{T_m-1} + T_{T_m}}$, then:
 
-\begin{itemize}
-\item If $j-1 = k^2$ for some $k$, then $T_{j-1} = T_{k-1} + T_k$
-\item If $j = l^2$ for some $l$, then $T_j = T_{l-1} + T_l$
-\end{itemize}
+\begin{align}
+\left(T_{T_{T_m-1} + T_{T_m}}\right)^2 &= j^2 \\
+&= T_{j-1} + T_j \\
+&= T_{T_{T_{T_m-1} + T_{T_m}}-1} + T_{T_{T_{T_m-1} + T_{T_m}}}
+\end{align}
 
-We continue this process until no squares remain in any subscript.
+\subsection{Final Expression}
+
+Therefore, the complete expression for $(T_{T_m^2})^2$ with no squares remaining is:
+
+\begin{equation}
+\boxed{(T_{T_m^2})^2 = T_{T_{T_m-1} + T_{T_m}-1} + T_{T_{T_m-1} + T_{T_m}}}
+\end{equation}
 
 \section{Specific Cases}
 
