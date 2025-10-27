@@ -1,13 +1,13 @@
 """
-Triangular Square Difference Finder
-Finds the smallest natural number that is both:
-1. The square of the triangular number of the square of a triangular number ((T_(T_n²))²)
-2. The difference between two triangular numbers (T_m - T_k)
+Triangular Number Analysis Program
+Finds numbers that are both:
+1. Sum of two consecutive triangular numbers (T_n + T_(n+1))
+2. Difference of two triangular numbers (T_m - T_k)
 
 Uses the property: T_n + T_(n+1) = (n+1)²
 
 Author: Gregory Conner
-Version: 0.1.4
+Version: 0.1.5
 """
 
 import math
@@ -188,6 +188,41 @@ def is_difference_of_triangulars(x):
     
     return False, 0, 0
 
+def find_smallest_consecutive_sum_and_difference():
+    """Find the smallest number that is both sum of consecutive triangulars and difference of triangulars"""
+    print("Triangular Number Analysis: Consecutive Sum AND Difference")
+    print("=" * 60)
+    print()
+    
+    # Demonstrate the consecutive triangular sum property
+    demonstrate_consecutive_property(10)
+    
+    print("Searching for the smallest natural number that is:")
+    print("1. Sum of two consecutive triangular numbers (T_n + T_(n+1))")
+    print("2. Difference of two triangular numbers (T_m - T_k)")
+    print()
+    
+    # Since T_n + T_(n+1) = (n+1)², we only need to check perfect squares
+    # Start searching from small perfect squares
+    for n in range(2, 100):  # Start from n=2 since n=1 gives 4, which is small
+        x = n * n  # This is T_(n-1) + T_n
+        
+        # Check if x is also difference of triangulars
+        is_diff_tri, k, m = is_difference_of_triangulars(x)
+        
+        if is_diff_tri:
+            print(f"Found solution: {x}")
+            print(f"  - {x} = T_{n-1} + T_{n} = {triangular_number(n-1)} + {triangular_number(n)} = {n}²")
+            print(f"  - {x} = T_{m} - T_{k} = {triangular_number(m)} - {triangular_number(k)}")
+            return x, n-1, n, k, m
+        
+        # Progress indicator
+        if n % 10 == 0:
+            print(f"Checked perfect squares up to {n}² = {x}...")
+    
+    print("No solution found in the search range.")
+    return None
+
 def find_smallest_solution():
     """Find the smallest natural number satisfying both conditions"""
     print("Triangular Number Analysis with Consecutive Sum Property")
@@ -236,4 +271,4 @@ def find_smallest_solution():
     return None
 
 if __name__ == "__main__":
-    result = find_smallest_solution()
+    result = find_smallest_consecutive_sum_and_difference()

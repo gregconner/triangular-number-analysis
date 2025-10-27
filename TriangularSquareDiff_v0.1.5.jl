@@ -1,13 +1,13 @@
 """
-Triangular Square Difference Finder
-Finds the smallest natural number that is both:
-1. The square of the triangular number of the square of a triangular number ((T_(T_n²))²)
-2. The difference between two triangular numbers (T_m - T_k)
+Triangular Number Analysis Program
+Finds numbers that are both:
+1. Sum of two consecutive triangular numbers (T_n + T_(n+1))
+2. Difference of two triangular numbers (T_m - T_k)
 
 Uses the property: T_n + T_(n+1) = (n+1)²
 
 Author: Gregory Conner
-Version: 0.1.4
+Version: 0.1.5
 """
 
 # Triangular number formula: T_n = n(n+1)/2
