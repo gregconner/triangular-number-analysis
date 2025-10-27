@@ -5,14 +5,154 @@ Finds numbers that are both:
 2. Difference of two triangular numbers (T_m - T_k)
 
 Special focus: Finding the smallest ODD number with both properties
+Mathematical derivation: Multiple subscript expression for (T_(T_n²))²
 
 Uses the property: T_n + T_(n+1) = (n+1)²
 
 Author: Gregory Conner
-Version: 0.1.6
+Version: 0.1.7
 """
 
 import math
+
+def derive_multiple_subscript_expression(n):
+    """
+    Derive a multiple subscript expression for (T_(T_n²))² using the consecutive sum property.
+    
+    Mathematical derivation:
+    1. Start with T_n²
+    2. T_(T_n²) = T_(T_n²) (triangular number of the square)
+    3. (T_(T_n²))² = (T_(T_n²))² (square of the result)
+    
+    Using the property T_k + T_(k+1) = (k+1)²:
+    If T_(T_n²) = m, then T_(T_n²) + T_(T_n² + 1) = (T_n² + 1)²
+    
+    But we want (T_(T_n²))², not T_(T_n²) + T_(T_n² + 1)
+    
+    Let's work backwards: if we want (T_(T_n²))², we need to find consecutive triangulars that sum to T_(T_n²)
+    
+    If T_(T_n²) = k² for some k, then T_(T_n²) = T_(k-1) + T_k
+    So (T_(T_n²))² = (T_(k-1) + T_k)² = k⁴
+    
+    But this doesn't give us a multiple subscript expression directly.
+    
+    Let's try a different approach: express T_(T_n²) as a sum of consecutive triangulars.
+    """
+    T_n = triangular_number(n)
+    T_n_squared = T_n * T_n
+    T_of_T_n_squared = triangular_number(T_n_squared)
+    
+    print(f"Mathematical Derivation for n = {n}:")
+    print(f"T_{n} = {T_n}")
+    print(f"T_{n}² = {T_n_squared}")
+    print(f"T_{T_n_squared} = {T_of_T_n_squared}")
+    print(f"(T_{T_n_squared})² = {T_of_T_n_squared ** 2}")
+    print()
+    
+    # Check if T_(T_n²) is a perfect square
+    if is_perfect_square(T_of_T_n_squared):
+        sqrt_val = int(math.sqrt(T_of_T_n_squared))
+        print(f"Since T_{T_n_squared} = {T_of_T_n_squared} = {sqrt_val}²,")
+        print(f"we have T_{T_n_squared} = T_{sqrt_val-1} + T_{sqrt_val}")
+        print(f"Therefore: (T_{T_n_squared})² = ({sqrt_val}²)² = {sqrt_val}⁴ = {sqrt_val**4}")
+        print()
+        
+        # Verify the consecutive sum
+        T_k_minus_1 = triangular_number(sqrt_val - 1)
+        T_k = triangular_number(sqrt_val)
+        print(f"Verification: T_{sqrt_val-1} + T_{sqrt_val} = {T_k_minus_1} + {T_k} = {T_k_minus_1 + T_k}")
+        print(f"Check: {T_k_minus_1 + T_k} = {sqrt_val}² = {sqrt_val**2} ✓")
+        print()
+        
+        return sqrt_val, sqrt_val - 1, sqrt_val
+    else:
+        print(f"T_{T_n_squared} = {T_of_T_n_squared} is not a perfect square")
+        print("Cannot express as sum of consecutive triangular numbers using the property")
+        return None, None, None
+
+def general_multiple_subscript_derivation(n):
+    """
+    General derivation for (T_(T_n²))² using the consecutive sum property.
+    
+    Key insight: Even when T_(T_n²) is not a perfect square, we can still use
+    the consecutive sum property in a different way.
+    
+    If we want (T_(T_n²))², and T_(T_n²) = m, then:
+    (T_(T_n²))² = m²
+    
+    Now, if m = T_k + T_(k+1) for some k, then:
+    m² = (T_k + T_(k+1))² = (k+1)⁴
+    
+    But we need to find k such that T_k + T_(k+1) = T_(T_n²)
+    This means: (k+1)² = T_(T_n²)
+    So: k+1 = √(T_(T_n²))
+    
+    This only works if T_(T_n²) is a perfect square.
+    
+    For the general case, we can express (T_(T_n²))² as:
+    (T_(T_n²))² = (T_(T_n²))² = (T_(T_n²))²
+    
+    But we can also use the fact that:
+    T_(T_n²) = T_n²(T_n² + 1)/2
+    
+    So: (T_(T_n²))² = (T_n²(T_n² + 1)/2)² = T_n⁴(T_n² + 1)²/4
+    """
+    T_n = triangular_number(n)
+    T_n_squared = T_n * T_n
+    T_of_T_n_squared = triangular_number(T_n_squared)
+    
+    print(f"General Derivation for n = {n}:")
+    print(f"T_{n} = {T_n}")
+    print(f"T_{n}² = {T_n_squared}")
+    print(f"T_{T_n_squared} = {T_of_T_n_squared}")
+    print(f"(T_{T_n_squared})² = {T_of_T_n_squared ** 2}")
+    print()
+    
+    # Direct formula
+    direct_formula = (T_n_squared * (T_n_squared + 1) // 2) ** 2
+    print(f"Direct formula: (T_{T_n_squared})² = (T_{T_n_squared})² = {direct_formula}")
+    print()
+    
+    # Alternative expression using the triangular number formula
+    alt_formula = (T_n_squared * (T_n_squared + 1) // 2) ** 2
+    print(f"Using T_k = k(k+1)/2: T_{T_n_squared} = {T_n_squared}({T_n_squared}+1)/2 = {T_of_T_n_squared}")
+    print(f"Therefore: (T_{T_n_squared})² = ({T_of_T_n_squared})² = {alt_formula}")
+    print()
+    
+    # Check if we can use consecutive sum property
+    if is_perfect_square(T_of_T_n_squared):
+        sqrt_val = int(math.sqrt(T_of_T_n_squared))
+        print(f"Since T_{T_n_squared} = {T_of_T_n_squared} = {sqrt_val}²,")
+        print(f"we can use consecutive sum property:")
+        print(f"T_{T_n_squared} = T_{sqrt_val-1} + T_{sqrt_val}")
+        print(f"Therefore: (T_{T_n_squared})² = ({sqrt_val}²)² = {sqrt_val}⁴")
+        return sqrt_val
+    else:
+        print(f"T_{T_n_squared} = {T_of_T_n_squared} is not a perfect square")
+        print("Cannot directly apply consecutive sum property")
+        return None
+
+def demonstrate_multiple_subscript_derivation():
+    """Demonstrate the multiple subscript expression derivation for small values"""
+    print("Multiple Subscript Expression Derivation")
+    print("=" * 50)
+    print()
+    print("Using the property: T_k + T_(k+1) = (k+1)²")
+    print("We can derive expressions for (T_(T_n²))²")
+    print()
+    
+    for n in range(1, 6):
+        result = derive_multiple_subscript_expression(n)
+        if result[0] is not None:
+            sqrt_val, k_minus_1, k = result
+            print(f"For n={n}: (T_(T_{n}²))² = (T_{triangular_number(n)**2})² = {sqrt_val}⁴")
+        print("-" * 40)
+    
+    print("\nGeneral Derivation (works for all cases):")
+    print("=" * 50)
+    for n in range(1, 6):
+        general_multiple_subscript_derivation(n)
+        print("-" * 40)
 
 def consecutive_triangular_sum_property(n):
     """
@@ -309,4 +449,10 @@ def find_smallest_solution():
     return None
 
 if __name__ == "__main__":
+    # Demonstrate the multiple subscript expression derivation
+    demonstrate_multiple_subscript_derivation()
+    
+    print("\n" + "="*70 + "\n")
+    
+    # Also run the original problem
     result = find_smallest_odd_consecutive_sum_and_difference()

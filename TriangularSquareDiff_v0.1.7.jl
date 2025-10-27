@@ -5,11 +5,12 @@ Finds numbers that are both:
 2. Difference of two triangular numbers (T_m - T_k)
 
 Special focus: Finding the smallest ODD number with both properties
+Mathematical derivation: Multiple subscript expression for (T_(T_n²))²
 
 Uses the property: T_n + T_(n+1) = (n+1)²
 
 Author: Gregory Conner
-Version: 0.1.6
+Version: 0.1.7
 """
 
 # Triangular number formula: T_n = n(n+1)/2
