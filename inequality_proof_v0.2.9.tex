@@ -26,17 +26,21 @@ Thus, only $(2,3)$.
 
 From part (i), $m^n < n^m$ only for $(m,n)=(2,3)$.
 
-To find the smallest odd $n = c^d f^g$ with $c,d,f,g$ distinct integers $>1$.
+For odd $n = c^d f^g$ with $c,d,f,g$ distinct integers $>1$, $c,f$ must be odd.
 
-$n$ must be odd, so $c,f$ odd.
+The exponents $d,g$ must be distinct from each other and from $c,f$.
 
-The smallest such $n$ is $2025 = 5^2 \times 3^4$, with $c=5, d=2, f=3, g=4$.
+Since $(2,3)$ is the only pair with $m^n < n^m$, the minimal odd analog uses the next available exponent after the conflicting ones.
 
-All values $5,2,3,4$ are distinct and $>1$.
+The smallest bases are $c=3, f=5$, and to avoid $d=2$ conflicting with bases, use $d=4$ (next after $3$), $g=2$.
 
-Is there a smaller odd $n$? Checking smaller values shows no others satisfy the conditions.
+Thus $n = 3^4 \times 5^2 = 81 \times 25 = 2025$.
 
-For $2025$, the only factorization as two powers with distinct exponents and bases is $5^2 \times 3^4$.
+All values $3,4,5,2$ are distinct and $>1$.
+
+Any smaller $n$ would require smaller bases or exponents, but $3,5$ are the smallest odd primes, and exponents $2,3$ conflict, so $2,4$ is minimal.
+
+For $2025$, the only such expression is $3^4 \times 5^2$.
 
 \end{enumerate}
 
