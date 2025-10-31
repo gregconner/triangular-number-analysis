@@ -1,0 +1,38 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath,amsthm}
+
+\begin{document}
+
+\textbf{Short Proof of $\prod_{k=1}^{n-1} \sin\frac{k\pi}{2n} = \frac{\sqrt{n}}{2^{n-1}}$}
+
+\begin{proof}
+
+Consider the identity from roots of unity:
+\[
+\prod_{k=1}^{n-1} \sin\frac{k\pi}{n} = \frac{n}{2^{n-1}}
+\]
+
+Apply double-angle formula $\sin(2\theta) = 2\sin\theta\cos\theta$:
+\[
+\prod_{k=1}^{n-1} 2\sin\frac{k\pi}{2n}\cos\frac{k\pi}{2n} = \frac{n}{2^{n-1}}
+\]
+
+\[
+\prod_{k=1}^{n-1} \sin\frac{k\pi}{2n} \cdot \prod_{k=1}^{n-1} \cos\frac{k\pi}{2n} = \frac{n}{2^{2n-2}}
+\]
+
+By symmetry, $\prod_{k=1}^{n-1} \cos\frac{k\pi}{2n} = \prod_{k=1}^{n-1} \sin\frac{k\pi}{2n}$ (complementary angles).
+
+Thus:
+\[
+\left(\prod_{k=1}^{n-1} \sin\frac{k\pi}{2n}\right)^2 = \frac{n}{2^{2n-2}}
+\]
+
+\[
+\prod_{k=1}^{n-1} \sin\frac{k\pi}{2n} = \sqrt{\frac{n}{2^{2n-2}}} = \frac{\sqrt{n}}{2^{n-1}}
+\]
+
+\end{proof}
+
+\end{document}
