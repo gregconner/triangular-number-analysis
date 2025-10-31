@@ -1,0 +1,325 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\title{Complete Proof of the Sine Product Identity\\[0.3cm]
+{\large $\displaystyle\prod_{k=1}^{n-1} \sin\frac{k\pi}{2n} = \frac{\sqrt{n}}{2^{n-1}}$}}
+\author{Gregory Conner}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We present a complete and rigorous proof of the sine product identity using roots of unity and the product formula for sine. The proof proceeds in two stages: first establishing a preliminary result for the product at $k\pi/n$, then using a clever doubling argument with complementary angles to obtain the desired result at $k\pi/(2n)$.
+\end{abstract}
+
+\section{Main Result}
+
+\begin{theorem}
+For any positive integer $n \geq 2$:
+\begin{equation}
+\prod_{k=1}^{n-1} \sin\left(\frac{k\pi}{2n}\right) = \frac{\sqrt{n}}{2^{n-1}}
+\end{equation}
+\end{theorem}
+
+\section{Preliminary Lemma}
+
+We first establish a related identity that will be crucial for our proof.
+
+\begin{lemma}
+For any positive integer $n \geq 2$:
+\begin{equation}
+\prod_{k=1}^{n-1} \sin\left(\frac{k\pi}{n}\right) = \frac{n}{2^{n-1}}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Consider the polynomial equation $x^n = 1$. Its solutions are the $n$-th roots of unity:
+\begin{equation}
+\omega_k = e^{2\pi ik/n} = \cos\left(\frac{2\pi k}{n}\right) + i\sin\left(\frac{2\pi k}{n}\right), \quad k = 0, 1, \ldots, n-1
+\end{equation}
+
+We can factor $x^n - 1$ as:
+\begin{equation}
+x^n - 1 = (x-1)\prod_{k=1}^{n-1}(x - \omega_k)
+\end{equation}
+
+Dividing both sides by $x-1$:
+\begin{equation}
+\frac{x^n - 1}{x-1} = 1 + x + x^2 + \cdots + x^{n-1} = \prod_{k=1}^{n-1}(x - \omega_k)
+\end{equation}
+
+Taking the limit as $x \to 1$ (using L'Hôpital's rule on the left side):
+\begin{equation}
+\lim_{x\to 1}\frac{x^n - 1}{x-1} = \lim_{x\to 1} nx^{n-1} = n
+\end{equation}
+
+By continuity of the product:
+\begin{equation}
+\prod_{k=1}^{n-1}(1 - \omega_k) = n
+\end{equation}
+
+Now, we compute the modulus of each factor. For $\omega_k = e^{2\pi ik/n}$:
+\begin{align}
+|1 - \omega_k|^2 &= |1 - \cos(2\pi k/n) - i\sin(2\pi k/n)|^2 \\
+&= (1-\cos(2\pi k/n))^2 + \sin^2(2\pi k/n) \\
+&= 1 - 2\cos(2\pi k/n) + \cos^2(2\pi k/n) + \sin^2(2\pi k/n) \\
+&= 2 - 2\cos(2\pi k/n) \\
+&= 2(1 - \cos(2\pi k/n))
+\end{align}
+
+Using the half-angle formula $1 - \cos\theta = 2\sin^2(\theta/2)$:
+\begin{equation}
+|1 - \omega_k|^2 = 2 \cdot 2\sin^2(\pi k/n) = 4\sin^2(\pi k/n)
+\end{equation}
+
+Therefore:
+\begin{equation}
+|1 - \omega_k| = 2\sin(\pi k/n)
+\end{equation}
+
+where we use that $\sin(\pi k/n) > 0$ for $k = 1, 2, \ldots, n-1$.
+
+Now, observe that $1 - \omega_k$ has argument $\pi - \pi k/n$ for $k < n/2$ and the product $\prod_{k=1}^{n-1}(1 - \omega_k)$ is a real positive number (equal to $n$). This is because the complex arguments cancel in pairs due to symmetry: $\omega_k$ and $\omega_{n-k}$ contribute conjugate factors.
+
+Therefore:
+\begin{equation}
+\prod_{k=1}^{n-1}|1 - \omega_k| = n
+\end{equation}
+
+Substituting our expression for $|1 - \omega_k|$:
+\begin{equation}
+\prod_{k=1}^{n-1}2\sin(\pi k/n) = n
+\end{equation}
+
+\begin{equation}
+2^{n-1}\prod_{k=1}^{n-1}\sin(\pi k/n) = n
+\end{equation}
+
+\begin{equation}
+\prod_{k=1}^{n-1}\sin(\pi k/n) = \frac{n}{2^{n-1}}
+\end{equation}
+\end{proof}
+
+\section{Key Observation}
+
+The crucial insight is to relate the products at $k\pi/(2n)$ to those at $k\pi/n$ and $(2n-k)\pi/(2n)$.
+
+\begin{lemma}[Complementary Angles]
+For $1 \leq k \leq n-1$:
+\begin{equation}
+\sin\left(\frac{k\pi}{2n}\right) \cdot \sin\left(\frac{(2n-k)\pi}{2n}\right) = \sin\left(\frac{k\pi}{2n}\right) \cdot \sin\left(\pi - \frac{k\pi}{2n}\right) = \sin^2\left(\frac{k\pi}{2n}\right)
+\end{equation}
+Also:
+\begin{equation}
+\sin\left(\frac{(n+k)\pi}{2n}\right) = \sin\left(\frac{\pi}{2} + \frac{k\pi}{2n}\right) = \cos\left(\frac{k\pi}{2n}\right)
+\end{equation}
+\end{lemma}
+
+\section{Proof of Main Theorem}
+
+\begin{proof}
+Consider the product over all $k$ from $1$ to $2n-1$:
+\begin{equation}
+\prod_{k=1}^{2n-1}\sin\left(\frac{k\pi}{2n}\right)
+\end{equation}
+
+We can split this product into two parts:
+\begin{equation}
+\prod_{k=1}^{2n-1}\sin\left(\frac{k\pi}{2n}\right) = \prod_{k=1}^{n-1}\sin\left(\frac{k\pi}{2n}\right) \cdot \sin\left(\frac{n\pi}{2n}\right) \cdot \prod_{k=n+1}^{2n-1}\sin\left(\frac{k\pi}{2n}\right)
+\end{equation}
+
+Note that $\sin(n\pi/(2n)) = \sin(\pi/2) = 1$.
+
+For the second product, substitute $k = n + j$ where $j = 1, 2, \ldots, n-1$:
+\begin{equation}
+\prod_{k=n+1}^{2n-1}\sin\left(\frac{k\pi}{2n}\right) = \prod_{j=1}^{n-1}\sin\left(\frac{(n+j)\pi}{2n}\right) = \prod_{j=1}^{n-1}\sin\left(\frac{\pi}{2} + \frac{j\pi}{2n}\right)
+\end{equation}
+
+Using $\sin(\pi/2 + \alpha) = \cos\alpha$:
+\begin{equation}
+\prod_{j=1}^{n-1}\sin\left(\frac{\pi}{2} + \frac{j\pi}{2n}\right) = \prod_{j=1}^{n-1}\cos\left(\frac{j\pi}{2n}\right)
+\end{equation}
+
+Therefore:
+\begin{equation}
+\prod_{k=1}^{2n-1}\sin\left(\frac{k\pi}{2n}\right) = \prod_{k=1}^{n-1}\sin\left(\frac{k\pi}{2n}\right) \cdot \prod_{k=1}^{n-1}\cos\left(\frac{k\pi}{2n}\right)
+\end{equation}
+
+Now, we apply Lemma 1 with $n$ replaced by $2n$. Note that:
+\begin{equation}
+\prod_{k=1}^{2n-1}\sin\left(\frac{k\pi}{2n}\right) = \frac{2n}{2^{2n-1}}
+\end{equation}
+
+Using the double-angle formula $\sin(2\alpha) = 2\sin\alpha\cos\alpha$:
+\begin{equation}
+\sin\left(\frac{k\pi}{n}\right) = 2\sin\left(\frac{k\pi}{2n}\right)\cos\left(\frac{k\pi}{2n}\right)
+\end{equation}
+
+From Lemma 1:
+\begin{equation}
+\prod_{k=1}^{n-1}\sin\left(\frac{k\pi}{n}\right) = \prod_{k=1}^{n-1}2\sin\left(\frac{k\pi}{2n}\right)\cos\left(\frac{k\pi}{2n}\right) = 2^{n-1}\prod_{k=1}^{n-1}\sin\left(\frac{k\pi}{2n}\right)\prod_{k=1}^{n-1}\cos\left(\frac{k\pi}{2n}\right)
+\end{equation}
+
+Substituting from Lemma 1:
+\begin{equation}
+\frac{n}{2^{n-1}} = 2^{n-1}\prod_{k=1}^{n-1}\sin\left(\frac{k\pi}{2n}\right)\prod_{k=1}^{n-1}\cos\left(\frac{k\pi}{2n}\right)
+\end{equation}
+
+Let $P = \prod_{k=1}^{n-1}\sin(k\pi/(2n))$ and $Q = \prod_{k=1}^{n-1}\cos(k\pi/(2n))$. Then:
+\begin{equation}
+PQ = \frac{n}{2^{2(n-1)}}
+\end{equation}
+
+From the earlier observation with $n \to 2n$ in Lemma 1:
+\begin{equation}
+\prod_{k=1}^{2n-1}\sin\left(\frac{k\pi}{2n}\right) = PQ = \frac{2n}{2^{2n-1}} = \frac{n}{2^{2n-2}}
+\end{equation}
+
+Therefore:
+\begin{equation}
+P \cdot Q = \frac{n}{2^{2n-2}}
+\end{equation}
+
+But from Lemma 1 applied directly:
+\begin{equation}
+2^{n-1}P \cdot Q = \frac{n}{2^{n-1}}
+\end{equation}
+
+which gives:
+\begin{equation}
+P \cdot Q = \frac{n}{2^{2n-2}}
+\end{equation}
+
+Now we use the symmetry property. Note that:
+\begin{equation}
+\cos\left(\frac{k\pi}{2n}\right) = \sin\left(\frac{\pi}{2} - \frac{k\pi}{2n}\right) = \sin\left(\frac{(n-k)\pi}{2n}\right)
+\end{equation}
+
+Actually, let's use a different approach. We know:
+\begin{equation}
+P^2 = \prod_{k=1}^{n-1}\sin^2\left(\frac{k\pi}{2n}\right)
+\end{equation}
+
+Using $\sin^2\alpha = \frac{1-\cos(2\alpha)}{2}$:
+\begin{equation}
+P^2 = \prod_{k=1}^{n-1}\frac{1-\cos(k\pi/n)}{2} = \frac{1}{2^{n-1}}\prod_{k=1}^{n-1}\left(1-\cos\frac{k\pi}{n}\right)
+\end{equation}
+
+Using $1-\cos\theta = 2\sin^2(\theta/2)$:
+\begin{equation}
+\prod_{k=1}^{n-1}\left(1-\cos\frac{k\pi}{n}\right) = \prod_{k=1}^{n-1}2\sin^2\left(\frac{k\pi}{2n}\right) = 2^{n-1}P^2
+\end{equation}
+
+Therefore:
+\begin{equation}
+P^2 = \frac{2^{n-1}P^2}{2^{n-1}} = P^2
+\end{equation}
+
+This is circular. Let me use the correct approach with products over different ranges.
+
+\textbf{Correct Final Approach:}
+
+From Lemma 1 with $2n$ instead of $n$:
+\begin{equation}
+\prod_{k=1}^{2n-1}\sin\left(\frac{k\pi}{2n}\right) = \frac{2n}{2^{2n-1}} = \frac{n}{2^{2n-2}}
+\end{equation}
+
+We separate this into three parts: $k \in \{1, \ldots, n-1\}$, $k=n$, and $k \in \{n+1, \ldots, 2n-1\}$:
+\begin{equation}
+\frac{n}{2^{2n-2}} = \left[\prod_{k=1}^{n-1}\sin\left(\frac{k\pi}{2n}\right)\right] \cdot 1 \cdot \left[\prod_{k=1}^{n-1}\cos\left(\frac{k\pi}{2n}\right)\right]
+\end{equation}
+
+Also, from Lemma 1 with $n$:
+\begin{equation}
+\prod_{k=1}^{n-1}\sin\left(\frac{k\pi}{n}\right) = \frac{n}{2^{n-1}}
+\end{equation}
+
+Using $\sin(2\alpha) = 2\sin\alpha\cos\alpha$:
+\begin{equation}
+\frac{n}{2^{n-1}} = 2^{n-1}\left[\prod_{k=1}^{n-1}\sin\left(\frac{k\pi}{2n}\right)\right]\left[\prod_{k=1}^{n-1}\cos\left(\frac{k\pi}{2n}\right)\right]
+\end{equation}
+
+Dividing these two equations:
+\begin{equation}
+\frac{n/2^{2n-2}}{n/2^{n-1}} = \frac{P \cdot Q}{2^{n-1} P \cdot Q}
+\end{equation}
+
+\begin{equation}
+\frac{1}{2^{n-1}} = \frac{1}{2^{n-1}}
+\end{equation}
+
+This confirms consistency. From the second equation:
+\begin{equation}
+P \cdot Q = \frac{n}{2^{2n-2}}
+\end{equation}
+
+We also have $P = Q$ by symmetry (the cosine product equals the sine product due to complementary angles). Therefore:
+\begin{equation}
+P^2 = \frac{n}{2^{2n-2}}
+\end{equation}
+
+\begin{equation}
+P = \sqrt{\frac{n}{2^{2n-2}}} = \frac{\sqrt{n}}{2^{n-1}}
+\end{equation}
+\end{proof}
+
+\section{Verification and Examples}
+
+\subsection{Small Values}
+
+\begin{itemize}
+\item \textbf{$n=2$:} 
+\begin{equation}
+\sin\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} = \frac{\sqrt{2}}{2^1} \quad \checkmark
+\end{equation}
+
+\item \textbf{$n=3$:} 
+\begin{equation}
+\sin\left(\frac{\pi}{6}\right) \cdot \sin\left(\frac{2\pi}{6}\right) = \frac{1}{2} \cdot \frac{\sqrt{3}}{2} = \frac{\sqrt{3}}{4} = \frac{\sqrt{3}}{2^2} \quad \checkmark
+\end{equation}
+
+\item \textbf{$n=4$:} 
+\begin{align}
+&\sin\left(\frac{\pi}{8}\right) \cdot \sin\left(\frac{2\pi}{8}\right) \cdot \sin\left(\frac{3\pi}{8}\right) \\
+&= \sin\left(\frac{\pi}{8}\right) \cdot \frac{\sqrt{2}}{2} \cdot \cos\left(\frac{\pi}{8}\right) \\
+&= \frac{\sqrt{2}}{2} \sin\left(\frac{\pi}{8}\right)\cos\left(\frac{\pi}{8}\right) \\
+&= \frac{\sqrt{2}}{2} \cdot \frac{1}{2}\sin\left(\frac{\pi}{4}\right) \\
+&= \frac{\sqrt{2}}{4} \cdot \frac{\sqrt{2}}{2} = \frac{2}{8} = \frac{1}{4} = \frac{\sqrt{4}}{2^3} \quad \checkmark
+\end{align}
+\end{itemize}
+
+\subsection{Numerical Verification for $n=5$}
+
+For $n=5$, we compute:
+\begin{align}
+\prod_{k=1}^{4}\sin\left(\frac{k\pi}{10}\right) &= \sin(18°) \cdot \sin(36°) \cdot \sin(54°) \cdot \sin(72°) \\
+&\approx 0.309 \times 0.588 \times 0.809 \times 0.951 \\
+&\approx 0.1399
+\end{align}
+
+The formula gives:
+\begin{equation}
+\frac{\sqrt{5}}{2^4} = \frac{2.236}{16} \approx 0.1398 \quad \checkmark
+\end{equation}
+
+\section{Conclusion}
+
+We have rigorously proven that:
+\begin{equation}
+\boxed{\prod_{k=1}^{n-1} \sin\left(\frac{k\pi}{2n}\right) = \frac{\sqrt{n}}{2^{n-1}}}
+\end{equation}
+
+This beautiful identity connects the product of sine values at equally spaced angles to a simple closed form involving a square root and a power of 2. The proof relies on the theory of roots of unity and clever manipulation of trigonometric identities.
+
+\end{document}
+
